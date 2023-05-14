@@ -1,0 +1,31 @@
+
+05-05-2023 22:40:17 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 22:40:26 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 22:40:30 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 22:56:32 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 22:57:32 [orchidee.test][info] Feed query: [{"hashtag":"orchideedebeaute","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+05-05-2023 22:57:35 [orchidee.test][error] Feed query failed! Try reconnecting your account in the plugin settings.
+-------------------------------
+05-05-2023 22:58:55 [orchidee.test][info] Feed query: [{"hashtag":"orchideedebeaute","blocked_users":"","blocked_words":"","allowed_words":""},"1","20"]
+05-05-2023 22:58:58 [orchidee.test][error] Feed query failed! Try reconnecting your account in the plugin settings.
+-------------------------------
+05-05-2023 23:35:15 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 23:35:17 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 23:36:41 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 23:36:43 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 23:37:55 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"5","20"]
+-------------------------------
+05-05-2023 23:38:51 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"1","20"]
+-------------------------------
+05-05-2023 23:39:05 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"1","20"]
+-------------------------------
+05-05-2023 23:39:07 [orchidee.test][info] Feed query: [{"account":"shoui21","blocked_users":"","blocked_words":"","allowed_words":""},"1","20"]
+-------------------------------
