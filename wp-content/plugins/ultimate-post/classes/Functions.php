@@ -1035,6 +1035,10 @@ class Functions{
                 $query_args['post__not_in'] = isset($query_args['post__not_in']) ? array_merge($query_args['post__not_in'], $unique_ID[$attr['queryUnique']]) : $unique_ID[$attr['queryUnique']];
             }
         }
+        // exclude current post from Post blocks // v.2.9.6
+        if (is_single() && get_the_ID()) {
+            $query_args['post__not_in'] = isset($query_args['post__not_in']) ? array_merge($query_args['post__not_in'], array(get_the_ID())) : array(get_the_ID());
+        }
 
         if (isset($attr['queryQuick'])) {
             if ($attr['queryQuick'] != '' && $post_type != 'archiveBuilder') {
@@ -2699,6 +2703,13 @@ class Functions{
                     'end' => '18-2-2023',
                     'type' => 'banner',
                     'content' => ULTP_URL.'assets/img/banner.jpg',
+                    'force' => true
+                ),
+                array(
+                    'start' => '22-5-2023',
+                    'end' => '02-6-2023',
+                    'type' => 'banner',
+                    'content' => ULTP_URL.'assets/img/wp20-banner.png',
                     'force' => true
                 ),
                 // array(

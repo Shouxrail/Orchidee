@@ -66,6 +66,10 @@ class Builder {
     }
 
     function init_metabox_callback() {
+        $all_types = get_post_types( array( 'public' => true ), 'names' );
+        
+        $post_type = array_diff_key($all_types, array('page' => 'page', 'attachment' => 'attachment' ));
+
         add_meta_box(
             'postx-builder-id',
             __('PostX Builder Settings', 'ultimate-post'), 
@@ -77,7 +81,7 @@ class Builder {
             'ultp-feature-video',
             __('Feature Video', 'ultimate-post'),
             array($this, 'video_source_callback'),
-            'post',
+            $post_type,
             'side'
         );
     }

@@ -1251,7 +1251,7 @@ class Post_Slider_1{
 
             'contenWraptWidth' => [
                 'type' => 'object',
-                'default' => (object)['lg'=>'60','unit' =>'%'],
+                'default' => (object)['lg'=>'60', 'xs'=>'90', 'unit' =>'%'],
                 'style' => [
                     (object)[
                         'selector' => '{{ULTP}} .ultp-block-content-inner  { width:{{contenWraptWidth}}; }'
@@ -1341,7 +1341,7 @@ class Post_Slider_1{
 
             'contentWrapPadding' => [
                 'type' => 'object',
-                'default' => (object)['lg' =>(object)['top' => '50','bottom' => '50', 'left'=>'50','right'=>'50', 'unit' =>'px']],
+                'default' => (object)['lg' =>(object)['top' => '50','bottom' => '50', 'left'=>'50','right'=>'50', 'unit' =>'px'], 'xs' =>(object)['top' => '20','bottom' => '20', 'left'=>'20','right'=>'20', 'unit' =>'px']],
                 'style' => [
                     (object)[
                         'selector'=>'{{ULTP}} .ultp-block-content-inner { padding: {{contentWrapPadding}}; }'
@@ -1917,7 +1917,7 @@ class Post_Slider_1{
             ],
             'catSacing' => [
                 'type' => 'object',
-                'default' => (object)['lg' =>(object)['top' => -65,'bottom' => 5,'left' => 0,'right' => 0, 'unit' =>'px']],
+                'default' => (object)['lg' =>(object)['top' => -65,'bottom' => 5,'left' => 0,'right' => 0, 'unit' =>'px'], 'xs' =>(object)['top' => -34,'bottom' => 5,'left' => 0,'right' => 0, 'unit' =>'px']],
                 'style' => [
                     (object)[
                         'depends' => [

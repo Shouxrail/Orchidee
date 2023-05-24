@@ -4,7 +4,7 @@ Tags: post grid, gutenberg blocks, recent posts, popular posts, Post Blocks, Mag
 Requires at least: 5.0    
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 2.9.5
+Stable tag: 2.9.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -343,6 +343,12 @@ It is a Gutenberg plugin it works great with WordPress version 5.x.x or more. An
 11. With the help of the Elementor and Saved Template addons, you can use any of the post blocks of PostX to any pages while editing with Elementor builder.
 
 == Changelog ==
+= 2.9.6 – 22 May 2023 =
+* Update: Postx Banner Updated
+* Update: Feature Image/Video Support in Custom Post Type
+* Fix: Post Slider 1 Mobile Responsive Issue 
+* Fix: Single Post Builder Post Repetition Issue
+ 
 = 2.9.5 – 18 May 2023 =
 * Fix: Php function parameter deprecated issues fixed
 

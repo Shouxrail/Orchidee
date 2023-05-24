@@ -3,8 +3,8 @@ Contributors: nextendweb
 Tags: slider, wordpress slider, image slider, layer slider, responsive slider, slideshow, fullwidth slider, post slider, horizontal slider, vertical slider, photo slider, video slider
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 5.0
-Tested up to: 6.2
-Stable tag: 3.5.1.15
+Tested up to: 6.2.1
+Stable tag: 3.5.1.16
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -208,6 +208,10 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 9. Layer slider with layers styles. Made with FREE version.
 
 == Changelog ==
+
+= 3.5.1.16 - 18. May 2023 =
+* Fix: Block themes only display shortcodes instead of sliders in WordPress 6.2.1.
+* Fix: Beaver Builder row duplication issue, when Smart Slider is in the row.
 
 = 3.5.1.15 - 12. May 2023 =
 * Feature: Database managing codes got updated.

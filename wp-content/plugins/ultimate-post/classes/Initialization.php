@@ -28,7 +28,7 @@ class ULTP_Initialization{
         $this->include_addons(); // Include Addons
 
         add_action('wp',                            array($this, 'popular_posts_tracker_callback'));
-        add_filter('block_categories_all',          array($this, 'register_category_callback'), 10, 2); // Block Category Register
+        add_filter('block_categories_all',          array($this, 'register_category_callback'), 999999999, 2); // Block Category Register
         add_action('after_setup_theme',             array($this, 'add_image_size'));
 
         add_action('enqueue_block_editor_assets',   array($this, 'register_scripts_back_callback')); // Only editor

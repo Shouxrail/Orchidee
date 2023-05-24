@@ -68,7 +68,7 @@ class Options{
                 }
             }
         }
-        $setting_link['ultp_settings'] = '<a href="'. esc_url(admin_url('admin.php?page=ultp-settings#settings')) .'">'. esc_html__('Settings', 'wp-megamenu') .'</a>';
+        $setting_link['ultp_settings'] = '<a href="'. esc_url(admin_url('admin.php?page=ultp-settings#settings')) .'">'. esc_html__('Settings', 'ultimate-post') .'</a>';
         return array_merge( $setting_link, $links, $upgrade_link);
     }
 
@@ -214,10 +214,10 @@ class Options{
         $current = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : '';
         if ($current) {
             $pro_active = ultimate_post()->is_lc_active();
-            $date_condition = date('U') < strtotime('16-4-2023');
+            $date_condition = date('U') < strtotime('02-6-2023');
             echo '<div class="ultp-settings-tab-wrap">';
                 if ($date_condition  && !$pro_active) {
-                    echo '<div class="ultp-setting-hellobar"><span class="dashicons dashicons-bell ultp-ring"></span><strong> EID Offer: </strong>Enjoy Up To <b> 50%  OFF</b> on PostX Pro! - <a href="'.esc_url(ultimate_post()->get_premium_link( '', 'menu_topbar')).'" target="_blank">'.esc_html__('GET IT NOW!', 'ultimate-post').'</a></div>';
+                    echo '<div class="ultp-setting-hellobar"><span class="dashicons dashicons-bell ultp-ring"></span><strong> WordPress Birthday Offer: </strong>Get Up To <b> 45%  OFF</b> on PostX Pro! - <a href="'.esc_url(ultimate_post()->get_premium_link( '', 'menu_topbar')).'" target="_blank">'.esc_html__('GET IT NOW!', 'ultimate-post').'</a></div>';
                 } else {
                     if (!$pro_active) {
                         echo '<div class="ultp-setting-hellobar"><span class="dashicons dashicons-bell ultp-ring"></span><strong> New : </strong> PostX Dynamic Site Builder is Live - <a href="'.esc_url(ultimate_post()->get_premium_link( 'https://www.wpxpo.com/postx-dynamic-site-builder/', 'menu_topbar')).'" target="_blank">'.esc_html__('See what’s new', 'ultimate-post').'</a></div>';

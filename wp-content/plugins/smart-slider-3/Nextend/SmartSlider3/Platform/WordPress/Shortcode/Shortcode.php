@@ -196,6 +196,17 @@ class Shortcode {
             }
         });
 
+        /**
+         * @see SSDEV-3871
+         */
+        add_filter('render_block_nextend/smartslider3', function ($block_content, $parsed_block) {
+            if (!empty($parsed_block['attrs']['slider'])) {
+                return self::render(array('slider' => $parsed_block['attrs']['slider']));
+            }
+
+            return '';
+        }, 10, 2);
+
     }
 
     public static function forceIframe($reason, $disablePointer = false) {
