@@ -238,10 +238,11 @@ class TPGRelatedPost extends Custom_Widget_Base {
 		$item_column = "rt-col-md-{$grid_column_desktop} rt-col-sm-{$grid_column_tab} rt-col-xs-{$grid_column_mobile}";
 
 		$slider_main_class = $enable_related_slider ? 'slider-layout-main loading' : 'slider-is-disable';
+		$dynamicClass      = ! empty( $data['enable_external_link'] ) && $data['enable_external_link'] === 'show' ? " has-external-link" : "";
 
 		if ( $query->have_posts() ) :
 			?>
-        <div class="rt-container-fluid rt-tpg-container tpg-el-main-wrapper <?php echo esc_attr( $_layout . '-main' . ' ' . $slider_main_class ); ?>"
+        <div class="rt-container-fluid rt-tpg-container tpg-el-main-wrapper <?php echo esc_attr( $_layout . '-main' . ' ' . $slider_main_class . ' ' . $dynamicClass ); ?>"
              id="<?php echo esc_attr( $layoutID ); ?>"
              data-layout="<?php echo esc_attr( $data[ $_prefix . '_layout' ] ); ?>"
              data-grid-style=""
@@ -295,7 +296,9 @@ class TPGRelatedPost extends Custom_Widget_Base {
 			$wrapper_class[] = $_prefix . '_layout_wrapper';
 
 			//section title settings
+            echo "<div class='tpg-header-wrapper'>";
 			Fns::get_section_title( $data );
+            echo '</div>';
 
 			$slider_data = [
 				'speed'           => $data['speed'],
@@ -312,8 +315,6 @@ class TPGRelatedPost extends Custom_Widget_Base {
 			if ( $data['enable_2_rows'] == 'yes' ) {
 				$slider_data['autoHeight'] = false;
 			}
-
-			$col_start_class = $col_end_class = null;
 			?>
 
 			<?php if ( $enable_related_slider ) { ?>

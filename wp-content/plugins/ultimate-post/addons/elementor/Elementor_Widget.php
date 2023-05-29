@@ -44,7 +44,7 @@ class Gutenberg_Post_Blocks_Widget extends \Elementor\Widget_Base {
         $this->add_control(
 			'saved_template',
 			[
-				'label' => __( 'Saved Template', 'plugin-domain' ),
+				'label' => __( 'Saved Template', 'ultimate-post' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'options' => $this->_all_posts(),
 			]
@@ -53,7 +53,7 @@ class Gutenberg_Post_Blocks_Widget extends \Elementor\Widget_Base {
 			'important_note',
 			[
 				'type' => \Elementor\Controls_Manager::RAW_HTML,
-				'raw' => '<a href="'.admin_url('edit.php?post_type=ultp_templates').'" class="ultp-elementor-settings" target="_blank">Edit Template with Gutenberg</a>',
+				'raw' => '<a href="'.admin_url('edit.php?post_type=ultp_templates').'" class="ultp-elementor-settings" target="_blank">'.__('Edit Template with Gutenberg', 'ultimate-post').'</a>',
 			]
 		);
         $this->end_controls_section();

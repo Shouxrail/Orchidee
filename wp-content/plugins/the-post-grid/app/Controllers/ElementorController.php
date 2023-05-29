@@ -8,8 +8,6 @@
 namespace RT\ThePostGrid\Controllers;
 
 // Do not allow directly accessing this file.
-use Happy_Addons\Elementor\Library_Manager;
-use Happy_Addons\Elementor\Widgets_Manager;
 use RT\ThePostGrid\Helpers\Fns;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -120,8 +118,8 @@ if ( ! class_exists( 'ElementorController' ) ) :
 				wp_die( __( 'You don\'t have proper authorization to perform this action', 'rttpg' ) );
 			}
 
-			$status    = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : '';
-			$layout_id = isset( $_REQUEST['layout_id'] ) ? $_REQUEST['layout_id'] : '';
+			$status    = $_REQUEST['status'] ?? '';
+			$layout_id = $_REQUEST['layout_id'] ?? '';
 
 			$post_args         = [ 'timeout' => 120 ];
 			$post_args['body'] = [ 'status' => $status, 'layout_id' => $layout_id ];
@@ -170,51 +168,6 @@ if ( ! class_exists( 'ElementorController' ) ) :
 			wp_send_json_success( $layoutData );
 		}
 
-		/**
-		 * Import layout
-		 * @return void
-		 */
-		public function rttpg_el_import() {
-			$BASE_URL = "https://www.radiustheme.com/demo/plugins/the-post-grid-elementor/wp-json/rttpgelapi/v1/layouts/";
-			// Verify the request.
-
-
-			check_ajax_referer( 'rttpg_nonce', 'nonce' );
-
-			// It's good let's do some capability check.
-			$user          = wp_get_current_user();
-			$allowed_roles = [ 'editor', 'administrator', 'author' ];
-
-			if ( ! array_intersect( $allowed_roles, $user->roles ) ) {
-				wp_die( __( 'You don\'t have permission to perform this action', 'rttpg' ) );
-			}
-
-			// Cool, we're almost there, let's check the user authenticity a little bit, shall we!
-			if ( ! is_user_logged_in() && $user->ID !== sanitize_text_field( $_REQUEST['user_id'] ) ) {
-				wp_die( __( 'You don\'t have proper authorization to perform this action', 'rttpg' ) );
-			}
-
-
-			$data = json_decode( wp_remote_retrieve_body( $data ), true );
-
-
-//			$status            = 'Error';
-
-
-//
-//			if ( ! $status ) {
-//				wp_send_json_error( [ 'messages' => 'Something is worng' ] );
-//			}
-
-			$content = [
-				'status' => 'ok',
-				'data'   => 'hello world'
-			];
-			echo json_encode( $content );
-			wp_die();
-		}
-
-//		End TODO Import
 
 		/**
 		 * Style
@@ -279,12 +232,22 @@ if ( ! class_exists( 'ElementorController' ) ) :
 				'list-layout'       => '\TPGListLayout',
 				'grid-hover-layout' => '\TPGGridHoverLayout',
 				'slider-layout'     => '\TPGSliderLayout',
+				'category-block'    => '\TPGCategoryBlock',
+				'section-title'     => '\SectionTitle',
 			];
+
+			if ( rtTPG()->hasPro() && defined( 'RT_THE_POST_GRID_PRO_PLUGIN_PATH' ) ) {
+				$proFileCheck = RT_THE_POST_GRID_PRO_PLUGIN_PATH . '/app/Widgets/elementor/category-block.php';
+				if ( file_exists( $proFileCheck ) ) {
+					unset( $widgets['category-block'] );
+				}
+			}
 
 			$widgets = apply_filters( 'tpg_el_widget_register', $widgets );
 
 			foreach ( $widgets as $file_name => $class ) {
-				if ( ! rtTPG()->hasPro() && 'slider-layout' === $file_name ) {
+
+				if ( ! rtTPG()->hasPro() && in_array( $file_name, [ 'slider-layout', 'category-block' ] ) ) {
 					continue;
 				}
 
@@ -355,6 +318,13 @@ if ( ! class_exists( 'ElementorController' ) ) :
 					'icon'        => 'eicon-post-slider tpg-grid-icon tss-promotional-element',
 					'categories'  => '[ "the-post-grid-elements" ]',
 				],
+				[
+					'name'        => 'tpg-category-block',
+					'title'       => esc_html__( 'TPG - Category Block', 'the-post-grid' ),
+					'description' => esc_html__( 'TPG - Category Block', 'the-post-grid' ),
+					'icon'        => 'eicon-folder-o tpg-grid-icon tss-promotional-element',
+					'categories'  => '[ "the-post-grid-elements" ]',
+				]
 			];
 
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $pro_widgets );

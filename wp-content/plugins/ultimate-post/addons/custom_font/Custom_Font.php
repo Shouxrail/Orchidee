@@ -11,8 +11,8 @@ class Custom_Font {
         add_filter('manage_ultp_custom_font_posts_columns', array($this, 'templates_table_head'));
         add_action('manage_ultp_custom_font_posts_custom_column', array($this, 'templates_table_content'), 10, 2);
         add_filter('upload_mimes', array($this, 'add_file_types_to_uploads'));
-        add_filter( 'wp_check_filetype_and_ext', array($this, 'font_correct_filetypes'), 10, 5 );
-        add_filter( 'enter_title_here', array($this, 'update_custom_font_title'), 10, 2 );
+        add_filter('wp_check_filetype_and_ext', array($this, 'font_correct_filetypes'), 10, 5);
+        add_filter('enter_title_here', array($this, 'update_custom_font_title'), 10, 2);
     }
 
     public function update_custom_font_title( $title, $post ) {
@@ -39,11 +39,11 @@ class Custom_Font {
 
     public function add_file_types_to_uploads($file_types) {
         $new_filetypes = array();
-        $new_filetypes['woff'] = 'font/woff'; // (Remove after checking) |application/font-woff|application/x-font-woff|application/octet-stream
-        $new_filetypes['woff2'] = 'font/woff2'; // (Remove after checking) |application/octet-stream|font/x-woff2;
-        $new_filetypes['ttf'] = 'font/ttf'; // (Remove after checking) |application/x-font-ttf;
+        $new_filetypes['woff'] = 'font/woff';
+        $new_filetypes['woff2'] = 'font/woff2';
+        $new_filetypes['ttf'] = 'font/ttf';
         $new_filetypes['svg'] = 'image/svg+xml';
-        $new_filetypes['eot'] = 'font/ttf'; // (Remove after checking) 'application/vnd.ms-fontobject';
+        $new_filetypes['eot'] = 'font/ttf';
         $file_types = array_merge($file_types, $new_filetypes );
         return $file_types;
     }
@@ -52,20 +52,22 @@ class Custom_Font {
     // Template Heading Add
     public function templates_table_head( $defaults ) {
         $type_array = array(
-            'preview' => __('<span class="ultp-custom-font-preview-th">Preview</span>', 'ultimate-post'),
+            'preview' => '<span class="ultp-custom-font-preview-th">'.__('Preview', 'ultimate-post').'</span>',
             'woff' => __('WOFF', 'ultimate-post'),
             'woff2' => __('WOFF2', 'ultimate-post'),
             'ttf' => __('TTF', 'ultimate-post'),
             'svg' => __('SVG', 'ultimate-post'),
             'eot' => __('EOT', 'ultimate-post')
         );
-        $defaults['title'] = 'Font Family';
+        $defaults['title'] = __('Font Family', 'ultimate-post');
         array_splice( $defaults, 2, 0, $type_array );
+        
         return $defaults;
     }
-    // Get Font Face
-    public function get_font_face($settings , $font_name = '') {
 
+
+    // Get Font Face
+    public function get_font_face($settings , $font_name) {
         $font_src = array();
         if($settings['woff']) {
             array_push( $font_src, 'url(' . esc_url( $settings['woff'] ) . ') format("woff")' );
@@ -91,6 +93,7 @@ class Custom_Font {
         return $font_face;
     }
 
+    
     // Column Content
     public function templates_table_content( $column_id, $post_id ) {
         $woff = $woff2 = $ttf = $svg = $eot = false;
@@ -109,7 +112,7 @@ class Custom_Font {
 
             switch ($column_id) {
                 case 0:
-                    echo '<span class="ultp-custom-font-preview" style="font-family: '.get_the_title($post_id).'">' . __('The quick brown fox jumps over the lazy dog', 'ultimate-post') . '</span>';
+                    echo '<span class="ultp-custom-font-preview" style="font-family: '.get_the_title($post_id).'">' . __('The quick brown fox jumps over the lazy dog.', 'ultimate-post') . '</span>';
                     break;
                 case 1:
                     echo '<span class="dashicons '.($woff ? 'dashicons-yes' : 'dashicons-no-alt').'"></span>';
@@ -145,12 +148,10 @@ class Custom_Font {
 
 
     function set_data($arr = [], $font_name='') { ?>
-        
         <div class="ultp-custom-font-container ultp-custom-font<?php echo empty($arr) ? '-copy' : ''; ?>">
             <div class="ultp-custom-font-heading">
                 <div>
                     <label><?php _e('Weight:  ', 'ultimate-post'); ?> <span class="ultp-custom-font-weight"> <?php _e(isset($arr['weight']) ? $arr['weight'] : '', 'ultimate-post'); ?> </span></label>
-
                     <select name="weight[]">
                         <?php $weight = isset($arr['weight']) ? $arr['weight'] : ''; ?>
                         <option <?php selected( $weight, 'normal' ); ?> value="normal"><?php _e('- Normal -', 'ultimate-post'); ?></option>
@@ -167,7 +168,7 @@ class Custom_Font {
                 </div>
                 <?php
                     $styles = '';
-                    if(!empty($arr)) {
+                    if (!empty($arr)) {
                         $font_face = $this->get_font_face($arr , $font_name);
                         echo '<style type="text/css">'.$font_face.'</style>';
                         $styles = 'style="font-family: '.$font_name.'; font-weight: '.$arr['weight'].' "';
@@ -184,27 +185,27 @@ class Custom_Font {
                 <div class="ultp-font-file-list">
                     <label><?php _e('WOFF File', 'ultimate-post'); ?></label>
                     <input type="text" name="woff[]" value="<?php echo isset($arr['woff']) ? $arr['woff'] : ''; ?>" placeholder="<?php _e('The web open Font Format, Used by Modern Browsers', 'ultimate-post'); ?>"/>
-                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span>Upload</span>
+                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span><?php _e('Upload', 'ultimate-post'); ?></span>
                 </div>
                 <div class="ultp-font-file-list">
                     <label><?php _e('WOFF2 File', 'ultimate-post'); ?></label>
                     <input type="text" name="woff2[]" value="<?php echo isset($arr['woff2']) ? $arr['woff2'] : ''; ?>" placeholder="<?php _e('The web open Font Format 2, Used by Super Modern Browsers', 'ultimate-post'); ?>"/>
-                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span>Upload</span>
+                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span><?php _e('Upload', 'ultimate-post'); ?></span>
                 </div>
                 <div class="ultp-font-file-list">
                     <label><?php _e('TTF File', 'ultimate-post'); ?></label>
                     <input type="text" name="ttf[]" value="<?php echo isset($arr['ttf']) ? $arr['ttf'] : ''; ?>" placeholder="<?php _e('TrueType Fonts, Used for better supporting Safari, Android, iOS', 'ultimate-post'); ?>"/>
-                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span>Upload</span>
+                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span><?php _e('Upload', 'ultimate-post'); ?></span>
                 </div>
                 <div class="ultp-font-file-list">
                     <label><?php _e('SVG File', 'ultimate-post'); ?></label>
                     <input type="text" name="svg[]" value="<?php echo isset($arr['svg']) ? $arr['svg'] : ''; ?>" placeholder="<?php _e('SVG font allow SVG to be used as glyphs when displaying text, Used by Legacy iOS', 'ultimate-post'); ?>"/>
-                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span>Upload</span>
+                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span><?php _e('Upload', 'ultimate-post'); ?></span>
                 </div>
                 <div class="ultp-font-file-list">
                     <label><?php _e('EOT File', 'ultimate-post'); ?></label>
                     <input type="text" name="eot[]" value="<?php echo isset($arr['eot']) ? $arr['eot'] : ''; ?>" placeholder="<?php _e('Embedded OpenType, Used by IE6-IE9 Browsers', 'ultimate-post'); ?>"/>
-                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span>Upload</span>
+                    <span class="button ultp-font-upload"><span class="dashicons dashicons-upload"></span><?php _e('Upload', 'ultimate-post'); ?></span>
                 </div>
             </div>
         </div>

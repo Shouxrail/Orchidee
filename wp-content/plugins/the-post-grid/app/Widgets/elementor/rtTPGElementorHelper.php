@@ -904,6 +904,7 @@ class rtTPGElementorHelper {
 				'toggle'       => true,
 				'selectors'    => [
 					'{{WRAPPER}} .tpg-post-holder div' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .rt-tpg-container .rt-el-post-meta' => 'justify-content: {{VALUE}};',
 				],
 				'condition'    => [
 					$prefix . '_layout!' => [ 'grid-layout7', 'slider-layout4' ],
@@ -1418,6 +1419,28 @@ class rtTPGElementorHelper {
 				],
 				'condition' => [
 					'list_layout!' => [ 'list-layout2', 'list-layout2-2' ],
+				],
+			]
+		);
+
+		$ref->add_control(
+			'list_flex_direction',
+			[
+				'label'          => esc_html__( 'Flex Direction', 'the-post-grid' ),
+				'type'           => Controls_Manager::SELECT,
+				'options'        => [
+					''  => esc_html__( 'Default', 'the-post-grid' ),
+					'row-reverse' => esc_html__( 'Row Reverse', 'the-post-grid' ),
+					'column'  => esc_html__( 'Column', 'the-post-grid' ),
+					'column-reverse'  => esc_html__( 'Column Reverse', 'the-post-grid' ),
+				],
+				'condition'      => [
+					'list_layout' => [
+						'list-layout1', 'list-layout5'
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .tpg-el-main-wrapper .list-behaviour .rt-holder .rt-el-content-wrapper' => 'flex-direction: {{VALUE}};',
 				],
 			]
 		);
@@ -2023,6 +2046,49 @@ class rtTPGElementorHelper {
 			]
 		);
 
+		$ref->add_control(
+			'enable_external_link',
+			[
+				'label'        => esc_html__( 'Enable External Link', 'the-post-grid' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Show', 'the-post-grid' ),
+				'label_off'    => esc_html__( 'Hide', 'the-post-grid' ),
+				'return_value' => 'show',
+				'default'      => false,
+			]
+		);
+
+		$ref->add_control(
+			'section_external_url',
+			[
+				'label'       => esc_html__( 'External Link', 'the-post-grid' ),
+				'type'        => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'the-post-grid' ),
+				'options'     => [ 'url', 'is_external', 'nofollow' ],
+				'default'     => [
+					'url'         => '',
+					'is_external' => true,
+					'nofollow'    => true,
+				],
+				'label_block' => true,
+				'condition'   => [
+					'enable_external_link' => 'show',
+				],
+			]
+		);
+
+		$ref->add_control(
+			'section_external_text',
+			[
+				'label'     => esc_html__( 'Link Text', 'the-post-grid' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__('See More', 'the-post-grid'),
+				'condition' => [
+					'enable_external_link' => 'show',
+				],
+			]
+		);
+
 		if ( 'archive' == $layout_type ) {
 			$ref->add_control(
 				'show_cat_desc',
@@ -2361,67 +2427,6 @@ class rtTPGElementorHelper {
 			]
 		);
 
-		$ref->add_control(
-			'title_visibility_style',
-			[
-				'label'        => esc_html__( 'Title Visibility Style', 'the-post-grid' ),
-				'type'         => \Elementor\Controls_Manager::SELECT,
-				'default'      => 'default',
-				'options'      => [
-					'default'    => esc_html__( 'Default', 'the-post-grid' ),
-					'one-line'   => esc_html__( 'Show in 1 line', 'the-post-grid' ),
-					'two-line'   => esc_html__( 'Show in 2 lines', 'the-post-grid' ),
-					'three-line' => esc_html__( 'Show in 3 lines', 'the-post-grid' ),
-					'custom'     => esc_html__( 'Custom', 'the-post-grid' ),
-				],
-				'render_type'  => 'template',
-				'prefix_class' => 'title-',
-			]
-		);
-
-		$ref->add_control(
-			'title_limit',
-			[
-				'label'     => esc_html__( 'Title Length', 'the-post-grid' ),
-				'type'      => \Elementor\Controls_Manager::NUMBER,
-				'step'      => 1,
-				'classes'   => 'tpg-padding-left',
-				'condition' => [
-					'title_visibility_style' => 'custom',
-				],
-			]
-		);
-
-		$ref->add_control(
-			'title_limit_type',
-			[
-				'label'      => esc_html__( 'Title Crop by', 'the-post-grid' ),
-				'type'       => \Elementor\Controls_Manager::SELECT,
-				'default'    => 'word',
-				'options'    => [
-					'word'      => esc_html__( 'Words', 'the-post-grid' ),
-					'character' => esc_html__( 'Characters', 'the-post-grid' ),
-				],
-				'classes'    => 'tpg-padding-left',
-				'conditions' => [
-					'relation' => 'and',
-					'terms'    => [
-						[
-							'name'     => 'title_limit',
-							'operator' => '>',
-							'value'    => 0,
-						],
-						[
-							'name'     => 'title_visibility_style',
-							'operator' => '==',
-							'value'    => 'custom',
-						],
-					],
-
-				],
-			]
-		);
-
 		$title_position = [
 			'default' => esc_html__( 'Default', 'the-post-grid' ),
 		];
@@ -2496,6 +2501,45 @@ class rtTPGElementorHelper {
 					'default' => esc_html__( 'Default', 'the-post-grid' ),
 					'enable'  => esc_html__( 'Enable', 'the-post-grid' ),
 					'disable' => esc_html__( 'Disable', 'the-post-grid' ),
+				],
+			]
+		);
+
+		$ref->add_control(
+			'title_visibility_style',
+			[
+				'label'        => esc_html__( 'Title Visibility Style', 'the-post-grid' ),
+				'type'         => \Elementor\Controls_Manager::SELECT,
+				'default'      => 'default',
+				'options'      => [
+					'default'    => esc_html__( 'Default', 'the-post-grid' ),
+					'one-line'   => esc_html__( 'Show in 1 line', 'the-post-grid' ),
+					'two-line'   => esc_html__( 'Show in 2 lines', 'the-post-grid' ),
+					'three-line' => esc_html__( 'Show in 3 lines', 'the-post-grid' ),
+				],
+				'render_type'  => 'template',
+				'prefix_class' => 'title-',
+			]
+		);
+
+		$ref->add_control(
+			'title_limit',
+			[
+				'label'     => esc_html__( 'Title Length', 'the-post-grid' ),
+				'type'      => \Elementor\Controls_Manager::NUMBER,
+				'step'      => 1,
+			]
+		);
+
+		$ref->add_control(
+			'title_limit_type',
+			[
+				'label'      => esc_html__( 'Title Crop by', 'the-post-grid' ),
+				'type'       => \Elementor\Controls_Manager::SELECT,
+				'default'    => 'word',
+				'options'    => [
+					'word'      => esc_html__( 'Words', 'the-post-grid' ),
+					'character' => esc_html__( 'Characters', 'the-post-grid' ),
 				],
 			]
 		);
@@ -3767,6 +3811,66 @@ class rtTPGElementorHelper {
 			]
 		);
 
+		$ref->add_control(
+			'external_icon_color',
+			[
+				'label'     => esc_html__( 'External Link Color', 'the-post-grid' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .tpg-widget-heading-wrapper .external-link' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$ref->add_control(
+			'external_icon_color_hover',
+			[
+				'label'     => esc_html__( 'External Link Color - Hover', 'the-post-grid' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .tpg-widget-heading-wrapper .external-link:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$ref->add_responsive_control(
+			'external_icon_size',
+			[
+				'label'      => esc_html__( 'External Icon Size', 'the-post-grid' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 50,
+						'step' => 1,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .tpg-widget-heading-wrapper .external-link' => 'font-size: {{SIZE}}px;',
+				],
+			]
+		);
+
+		$ref->add_responsive_control(
+			'external_icon_position',
+			[
+				'label'      => esc_html__( 'External Icon Y Position', 'the-post-grid' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min'  => -70,
+						'max'  => 70,
+						'step' => 1,
+					],
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .tpg-widget-heading-wrapper .external-link' => 'top: {{SIZE}}px;',
+				],
+			]
+		);
+
 
 		if ( 'archive' == $layout_type ) {
 			$ref->add_control(
@@ -4814,7 +4918,7 @@ class rtTPGElementorHelper {
 				],
 				'toggle'    => true,
 				'selectors' => [
-					'{{WRAPPER}} .rt-tpg-container .rt-el-post-meta' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .rt-tpg-container .rt-el-post-meta' => 'text-align: {{VALUE}};justify-content: {{VALUE}}',
 				],
 			]
 		);
@@ -5000,11 +5104,8 @@ class rtTPGElementorHelper {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'selectors'  => [
-					'{{WRAPPER}} .tpg-el-main-wrapper .tpg-separate-category .categories-links'   => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .tpg-el-main-wrapper .post-meta-tags .categories-links a'   => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .tpg-el-main-wrapper .tpg-separate-category .categories-links a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition'  => [
-					'category_style!' => 'style3',
 				],
 			]
 		);

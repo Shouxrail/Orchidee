@@ -1961,7 +1961,7 @@ var templateAddSection = jQuery("#tmpl-elementor-add-section");
 if (0 < templateAddSection.length) {
   var oldTemplateButton = templateAddSection.html();
   var log_path = rttpgParams.plugin_url + '/assets/images/icon-40x40.svg';
-  oldTemplateButton = oldTemplateButton.replace('<div class="elementor-add-section-drag-title', '<div class="elementor-add-section-area-button rttpg-import-button" style="vertical-align: bottom;margin-left: 5px;"><img src="' + log_path + '" alt="TPG"/></div><div class="elementor-add-section-drag-title');
+  oldTemplateButton = oldTemplateButton.replace('<div class="elementor-add-section-drag-title', '<div class="elementor-add-section-area-button rttpg-import-button" style="vertical-align: bottom;margin-left: 5px;padding:0"><img src="' + log_path + '" alt="TPG"/></div><div class="elementor-add-section-drag-title');
   templateAddSection.html(oldTemplateButton);
 
   function replaceKey(obj, targetKey, newKey) {
@@ -1977,6 +1977,18 @@ if (0 < templateAddSection.length) {
     return obj;
   }
 
+  function replaceVal(obj, targetKey, returnVal) {
+    for (let key in obj) {
+      if (key === targetKey) {
+        obj[targetKey] = returnVal || {}; //obj[key];
+      } else if (typeof obj[key] === "object") {
+        replaceVal(obj[key], targetKey, returnVal);
+      }
+    }
+
+    return obj;
+  }
+
   const importLayout = (content, insertIndex) => {
     let newContent = JSON.parse(content);
     let modifiedData = newContent.map(item => {
@@ -1984,7 +1996,10 @@ if (0 < templateAddSection.length) {
         id: Math.random().toString(16).slice(2)
       };
     });
-    replaceKey(modifiedData, "category_ids", "cat_ids");
+    replaceVal(modifiedData, "category_ids", "");
+    replaceVal(modifiedData, 'orderby', 'date');
+    replaceVal(modifiedData, 'order', 'DESC');
+    replaceVal(modifiedData, 'offset', '');
 
     if (undefined != insertIndex && insertIndex != -1) {
       if (insertIndex > 1) {

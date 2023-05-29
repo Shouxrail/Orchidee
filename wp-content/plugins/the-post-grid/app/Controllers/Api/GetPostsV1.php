@@ -339,7 +339,7 @@ class GetPostsV1 {
 					"post_type"        => $data["post_type"],
 					"prefix"           => $prefix,
 					"post_count"       => esc_html( $get_view_count ),
-					"title"            => wp_kses( $post->post_title, Fns::allowedHtml() ),
+					"title"            => Fns::get_the_title( $id, $data ), //wp_kses( $post->post_title, Fns::allowedHtml() ),
 					'taxonomy_lists'   => $filtered_taxonomy_lists,
 					"post_class"       => join( ' ', get_post_class( null, $id ) ),
 					"layout_style"     => $data['layout_style'],
@@ -352,7 +352,7 @@ class GetPostsV1 {
 				$pCount ++;
 			}
 		} else {
-			$send_data['message'] = $data['no_posts_found_text'] ? $data['no_posts_found_text'] : __( "No posts found", "the-post-grid" );
+			$send_data['message'] = $data['no_posts_found_text'] ?? __( "No posts found", "the-post-grid" );
 			$send_data['args']    = $args;
 		}
 

@@ -2092,6 +2092,10 @@ z-index: 100000000999;
     align-items: center;
     font-size: 18px;
 }
+.ultp-design-templatesync {
+	flex-direction: column;
+	gap: 17px;
+}
 .ultp-image-rotate i {
     font-size: 25px;
     margin-left: 0;

@@ -305,10 +305,10 @@ class Post_Content {
         );
     }
     public function content($attr, $noAjax) {
+        $post_id = get_the_ID();
+        
         $block_name = 'post-content';
         $wrapper_before = $wrapper_after = $content = '';
-        
-        $post_id = get_the_ID();
         $post_content = get_the_content();
         $post_type = get_post_type();
         if ($post_type != 'ultp_builder' && $post_type != 'revision' && $post_type != 'premade') { // premade used for ultp.wpxpo.com
@@ -316,6 +316,9 @@ class Post_Content {
             $post_content = str_replace(']]>', ']]&gt;', $post_content);
         }
         if ($post_content) {
+            // from v.2.9.7 for Loading Post Content Css
+            ultimate_post()->set_css_style( $post_id );
+            
             $wrapper_before .= '<div '.($attr['advanceId']?'id="'.$attr['advanceId'].'" ':'').' class="wp-block-ultimate-post-'.$block_name.' ultp-block-'.$attr["blockId"].(isset($attr["className"])?' '.$attr["className"]:'').''.(isset($attr["align"])? ' align' .$attr["align"]:'').'">';
                 $wrapper_before .= '<div class="ultp-block-wrapper">';
                     $content .= '<div class="ultp-builder-content" data-postid="'.$post_id.'">';

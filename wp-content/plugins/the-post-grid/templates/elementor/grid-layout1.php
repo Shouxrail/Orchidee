@@ -16,9 +16,6 @@ $pID     = get_the_ID();
 $excerpt = Fns::get_the_excerpt( $pID, $data );
 $title   = Fns::get_the_title( $pID, $data );
 
-if ( 'custom' !== $data['title_visibility_style'] ) {
-	$title = get_the_title();
-}
 /**
  * Get post link markup
  * $link_start, $link_end, $readmore_link_start, $readmore_link_end
@@ -43,7 +40,6 @@ if ( 'masonry' == $data['layout_style'] ) {
 	$column_classes[] .= 'masonry-grid-item';
 }
 ?>
-
 <div <?php post_class( esc_attr( $col_class . ' ' . implode( ' ', $column_classes ) ) ); ?>
 		data-id="<?php echo esc_attr( $pID ); ?>">
 	<div class="rt-holder tpg-post-holder">

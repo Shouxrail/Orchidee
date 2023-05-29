@@ -204,8 +204,9 @@ class TPGListLayoutArchive extends Custom_Widget_Base {
 		$template_path = Fns::tpg_template_path( $post_data );
 		$_layout       = $data[ $_prefix . '_layout' ];
 		$_layout_style = $data[ $_prefix . '_layout_style' ];
+		$dynamicClass  = ! empty( $data['enable_external_link'] ) && $data['enable_external_link'] === 'show' ? " has-external-link" : "";
 		?>
-		<div class="rt-container-fluid rt-tpg-container tpg-el-main-wrapper <?php echo esc_attr( $_layout . '-main' ); ?>"
+		<div class="rt-container-fluid rt-tpg-container tpg-el-main-wrapper <?php echo esc_attr( $_layout . '-main'.' '.$dynamicClass ); ?>"
 			data-sc-id="elementor"
 			id="<?php echo esc_attr( $layoutID ); ?>"
 			data-layout="<?php echo esc_attr( $data[ $_prefix . '_layout' ] ); ?>"

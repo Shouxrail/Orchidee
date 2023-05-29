@@ -3306,6 +3306,7 @@ class Fns {
 	 */
 
 	public static function get_el_post_title( $title_tag, $title, $link_start, $link_end, $data ) {
+
 		echo '<div class="entry-title-wrapper">';
 
 		if ( rtTPG()->hasPro() && 'above_title' === $data['category_position'] || ! self::el_ignore_layout( $data ) ) {

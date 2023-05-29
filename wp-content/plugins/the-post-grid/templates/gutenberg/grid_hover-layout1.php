@@ -16,9 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $pID     = get_the_ID();
 $excerpt = Fns::get_the_excerpt( $pID, $data );
 $title   = Fns::get_the_title( $pID, $data );
-if ( 'custom' !== $data['title_visibility_style'] ) {
-	$title = get_the_title();
-}
+
 /**
  * Get post link markup
  * $link_start, $link_end, $readmore_link_start, $readmore_link_end
